@@ -14,7 +14,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import { Typography } from "@material-ui/core";
-
 import CampaignFormSectionHeading from "./CampaignFormSectionHeading";
 import GSForm from "./forms/GSForm";
 import GSTextField from "./forms/GSTextField";
@@ -24,6 +23,7 @@ import GSAutoComplete from "./forms/GSAutoComplete";
 import { makeTree } from "../lib";
 import { dataTest } from "../lib/attributes";
 import withMuiTheme from "../containers/hoc/withMuiTheme";
+import AdminTextPreview from "./AdminTextPreview";
 
 export class CampaignInteractionStepsFormBase extends React.Component {
   constructor(props) {
@@ -471,6 +471,7 @@ export class CampaignInteractionStepsFormBase extends React.Component {
           title="What do you want to discuss?"
           subtitle={sectionSubtitle}
         />
+        <AdminTextPreview text="testing"/>
         {this.renderInteractionStep(tree, availableActions)}
         <Button
           {...dataTest("interactionSubmit")}
@@ -479,8 +480,7 @@ export class CampaignInteractionStepsFormBase extends React.Component {
           )}
           variant="contained"
           color="primary"
-          onClick={this.onSave}
-        >
+          onClick={this.onSave}>
           {this.props.saveLabel}
         </Button>
       </div>
