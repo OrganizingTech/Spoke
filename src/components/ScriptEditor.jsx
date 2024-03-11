@@ -12,6 +12,7 @@ import { delimit } from "../lib/scripts";
 import { replaceEasyGsmWins } from "../lib/gsm";
 import Chip from "./Chip";
 import { getCharCount } from "@trt2/gsm-charset-utils";
+import AdminTextPreview from './AdminTextPreview';
 
 const styles = {
   editor: {
@@ -214,6 +215,10 @@ class ScriptEditor extends React.Component {
             <span> Exceeded MMS maximum </span>
           ) : null}
         </div>
+          <div>
+          <AdminTextPreview text='SCRIPTEDITOR admin text preview test'/>
+  
+          </div>
         <div style={styles.editor} onClick={this.focus}>
           <Editor
             name={name}
