@@ -23,7 +23,7 @@ import GSAutoComplete from "./forms/GSAutoComplete";
 import { makeTree } from "../lib";
 import { dataTest } from "../lib/attributes";
 import withMuiTheme from "../containers/hoc/withMuiTheme";
-import AdminTextPreview from "./AdminTextPreview";
+import AdminTextPreview from './AdminTextPreview';
 
 export class CampaignInteractionStepsFormBase extends React.Component {
   constructor(props) {
@@ -457,8 +457,9 @@ export class CampaignInteractionStepsFormBase extends React.Component {
         return toReturn;
       },
       {}
-    );
-
+      );
+      
+    const textPreview = this.props
     const tree = makeTree(this.state.interactionSteps);
 
     const sectionSubtitle = global.HIDE_BRANCHED_SCRIPTS
@@ -471,7 +472,9 @@ export class CampaignInteractionStepsFormBase extends React.Component {
           title="What do you want to discuss?"
           subtitle={sectionSubtitle}
         />
-        <AdminTextPreview text="testing"/>
+        <AdminTextPreview campaignData={textPreview}/> 
+        
+        
         {this.renderInteractionStep(tree, availableActions)}
         <Button
           {...dataTest("interactionSubmit")}
