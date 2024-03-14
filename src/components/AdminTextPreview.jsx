@@ -1,11 +1,11 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { applyScript } from '../lib/scripts'
 // I might have to add an ingestMethod just go get the first line of data.
 
 const AdminTextPreview = ({campaignData}) => {
     console.log('LOOK HERE FIRST! ----------------------------- ADMINTEXTPREVIEW COMPONENT');
-    console.log(campaignData)
-
+    console.log("customFields", campaignData.customFields);
+    console.log("script", campaignData.formValues.interactionSteps.script);
     // const value = campaignProps
     // console.log('ALLFIELDS');
     // console.log(allFields);
@@ -22,13 +22,13 @@ const AdminTextPreview = ({campaignData}) => {
         contact: "test contact", 
         texter: "texter",
         script: "test script", 
-        customFields: "custom fields"
+        customFields: campaignData.customFields
     })
 
     return (
-        <div className='admin-text-preview-container'>
+        <Fragment>
              {value}
-        </div>
+        </Fragment>
     );
 };
 

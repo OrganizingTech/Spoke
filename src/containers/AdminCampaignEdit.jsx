@@ -397,16 +397,22 @@ export class AdminCampaignEditBase extends React.Component {
     checkSectionCompleted(section) {
       return section.checkCompleted();
     }
+
+    handleAdminTextPreview() {
+      const { customFields } = this.props;
+      console.log("LINE 403 OF ADMIN CAMPAIGN EDIT")
+      console.log("custom fields", customFields)
+        const allData = JSON.stringify(customFields)
+        const value = (<AdminTextPreview allData={allData} />)
+      return (
+        value
+      );
+    };
     
     sections() {
       console.log("THIS.PROPS in SECTIONS METHOD in ADMINCAMPAIGNEDIT", this.props);
       console.log("THIS.STATE in SECTIONS METHOD in ADMINCAMPAIGNEDIT", this.state);
-      const handleAdminTextPreview = () => {
-        value = (<AdminTextPreview allData={this.props}/>)
-        return (
-          value
-        );
-      };
+
       const pendingJobs = this.props.campaignData.campaign.pendingJobs;
       const finalSections = [
         {
@@ -487,7 +493,7 @@ export class AdminCampaignEditBase extends React.Component {
           ? "Initial Outbound"
           : "Interactions",
         content: CampaignInteractionStepsForm,
-        content: handleAdminTextPreview(),
+        content2: this.handleAdminTextPreview(this.props),
         keys: ["interactionSteps"],
         checkCompleted: () =>
           this.state.campaignFormValues.interactionSteps[0] &&
