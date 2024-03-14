@@ -56,9 +56,23 @@ export default class GSScriptField extends GSFormField {
     this.handleCloseDialog();
   };
 
+  // handleAdminTextPreview = () => {
+  //   "I am the AdminTextPreview"
+  //   // const value = this.state.sampleContact;
+  //   // this.props.onChange(value);
+    
+  // }
+
   renderDialog() {
+    // console.log("I'M FROM GSScriptField Props")
+    // console.log(this.props)
+    // // console.log("I'M FROM GSScriptField State")
+    // // console.log(this.state)
+    // console.log("I'M FROM GSScriptField THIS")
+    // console.log(this)
     const { open } = this.state;
     const { customFields, sampleContact } = this.props;
+    
     let scriptFields = allScriptFields(customFields);
     const shouldHideNotesField = /contact-notes/.test(window.TEXTER_SIDEBOXES);
     if (shouldHideNotesField) {
