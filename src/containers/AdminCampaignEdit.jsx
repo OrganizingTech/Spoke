@@ -41,6 +41,8 @@ import { dataTest, camelCase } from "../lib/attributes";
 import CampaignTextingHoursForm from "../components/CampaignTextingHoursForm";
 import { styles } from "./AdminCampaignStats";
 import AdminScriptImport from "../containers/AdminScriptImport";
+import AdminTextPreview from "../components/AdminTextPreview"
+
 import { makeTree } from "../lib";
 
 const campaignInfoFragment = `
@@ -212,7 +214,6 @@ export class AdminCampaignEditBase extends React.Component {
       expandedSection = this.sections()[expandedSection];
       expandedKeys = expandedSection.keys;
     }
-
     const campaignDataCopy = {
       ...newProps.campaignData.campaign
     };
@@ -329,24 +330,24 @@ export class AdminCampaignEditBase extends React.Component {
       }
     );
   };
-
+  
   handleSave = async () => {
     // only save the current expanded section
     const { expandedSection } = this.state;
     if (expandedSection === null) {
       return;
     }
-
+    
     const section = this.sections()[expandedSection];
     let newCampaign = {};
     if (this.checkSectionSaved(section)) {
       return; // already saved and no data changes
     }
-
+    
     newCampaign = {
       ...this.getSectionState(section)
     };
-
+    
     if (Object.keys(newCampaign).length > 0) {
       // Transform the campaign into an input understood by the server
       delete newCampaign.customFields;
@@ -362,43 +363,53 @@ export class AdminCampaignEditBase extends React.Component {
       if (newCampaign.hasOwnProperty("interactionSteps")) {
         newCampaign.interactionSteps = makeTree(newCampaign.interactionSteps);
       }
-
+      
       await this.props.mutations.editCampaign(
         this.props.campaignData.campaign.id,
         newCampaign
-      );
+        );
+      }
+    };
+    
+    checkSectionSaved(section) {
+      // Tests section's keys of campaignFormValues against props.campaignData
+      // * Determines greyness of section button
+      // * Determine if section is marked done (in green) along with checkSectionCompleted()
+      // * Must be false for a section to save!!
+      // Only Contacts section implements checkSaved()
+      if (section.hasOwnProperty("checkSaved")) {
+        return section.checkSaved();
+      }
+      const sectionState = {};
+      const sectionProps = {};
+      section.keys.forEach(key => {
+        sectionState[key] = this.state.campaignFormValues[key];
+        sectionProps[key] = this.props.campaignData.campaign[key];
+      });
+      if (JSON.stringify(sectionState) !== JSON.stringify(sectionProps)) {
+        return false;
+      }
+      // console.log("SectionState", sectionState)
+      // console.log("SectionProps", sectionProps)
+      return true;
     }
-  };
-
-  checkSectionSaved(section) {
-    // Tests section's keys of campaignFormValues against props.campaignData
-    // * Determines greyness of section button
-    // * Determine if section is marked done (in green) along with checkSectionCompleted()
-    // * Must be false for a section to save!!
-    // Only Contacts section implements checkSaved()
-    if (section.hasOwnProperty("checkSaved")) {
-      return section.checkSaved();
+    
+    checkSectionCompleted(section) {
+      return section.checkCompleted();
     }
-    const sectionState = {};
-    const sectionProps = {};
-    section.keys.forEach(key => {
-      sectionState[key] = this.state.campaignFormValues[key];
-      sectionProps[key] = this.props.campaignData.campaign[key];
-    });
-    if (JSON.stringify(sectionState) !== JSON.stringify(sectionProps)) {
-      return false;
-    }
-    return true;
-  }
-
-  checkSectionCompleted(section) {
-    return section.checkCompleted();
-  }
-
-  sections() {
-    const pendingJobs = this.props.campaignData.campaign.pendingJobs;
-    const finalSections = [
-      {
+    
+    sections() {
+      console.log("THIS.PROPS in SECTIONS METHOD in ADMINCAMPAIGNEDIT", this.props);
+      console.log("THIS.STATE in SECTIONS METHOD in ADMINCAMPAIGNEDIT", this.state);
+      const handleAdminTextPreview = () => {
+        value = (<AdminTextPreview allData={this.props}/>)
+        return (
+          value
+        );
+      };
+      const pendingJobs = this.props.campaignData.campaign.pendingJobs;
+      const finalSections = [
+        {
         title: "Basics",
         content: CampaignBasicsForm,
         keys: [
@@ -476,6 +487,7 @@ export class AdminCampaignEditBase extends React.Component {
           ? "Initial Outbound"
           : "Interactions",
         content: CampaignInteractionStepsForm,
+        content: handleAdminTextPreview(),
         keys: ["interactionSteps"],
         checkCompleted: () =>
           this.state.campaignFormValues.interactionSteps[0] &&
@@ -554,6 +566,7 @@ export class AdminCampaignEditBase extends React.Component {
         expandableBySuperVolunteers: false
       }
     ];
+    // console.log("final sections", finalSections);
     if (
       this.props.campaignData.campaign.serviceManagers &&
       this.props.campaignData.campaign.serviceManagers.length
