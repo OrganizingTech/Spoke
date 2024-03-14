@@ -65,6 +65,14 @@ const capitalize = str => {
 };
 
 const getScriptFieldValue = (contact, texter, fieldName) => {
+  console.log("getScriptFieldValue from SCRIPTS line 68")
+  console.log("CONTACT")
+  console.log(contact)
+  console.log("TEXTER")
+  console.log(texter)
+  console.log("fieldName")
+  console.log(fieldName)
+
   let result;
   if (fieldName === "texterAliasOrFirstName") {
     result = texter.alias ? texter.alias : texter.firstName;
@@ -104,6 +112,13 @@ const getScriptFieldValue = (contact, texter, fieldName) => {
 };
 
 export const applyScript = ({ script, contact, customFields, texter }) => {
+  // console.log("applyScript Method")
+  // console.log("SCRIPT from applyScriptMethod")
+  // console.log(script)
+  // console.log("CONTACT from applyScriptMethod")
+  // console.log(contact)
+  // console.log("ALLSCRIPTFIELDS from applyScriptMethod")
+  // console.log(scriptFields)
   const scriptFields = allScriptFields(customFields, true);
   let appliedScript = script;
 
