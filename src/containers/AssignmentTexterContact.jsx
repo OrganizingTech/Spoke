@@ -112,7 +112,7 @@ export class AssignmentTexterContact extends React.Component {
 
   getMessageTextFromScript = script => {
     const { campaign, contact, texter } = this.props;
-
+    // console.log('ASSIGNMENT TEXTER CONTACT INITIATED', this.props)
     return script
       ? applyScript({
           contact,
