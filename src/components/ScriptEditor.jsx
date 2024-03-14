@@ -84,7 +84,7 @@ class ScriptEditor extends React.Component {
       editorState,
       readyToAdd: false
     };
-
+    // this.previewText
     this.focus = () => this.refs.editor.focus();
     this.onChange = this.onChange.bind(this);
     this.addCustomField = this.addCustomField.bind(this);
@@ -186,9 +186,24 @@ class ScriptEditor extends React.Component {
     );
     this.setState({ editorState: newEditorState }, this.focus);
   }
+  
 
+
+  // renderAdminTextPreview() {
+  //   // console.log("renderAdminTextPreview in ScriptEditor");
+  //   const allData = this.state
+  //   // console.log("All Data", allData)
+  //     return (
+
+  //       <div>
+  //         <AdminTextPreview campaignProps={allData}/>
+  //       </div>
+  //       // <div style={styles.adminTextPreviewSection}></div>
+  //     );
+  // }
   renderCustomFields() {
     const { scriptFields } = this.props;
+    // console.log(this.props);
     return (
       <div style={styles.scriptFieldButtonSection}>
         {scriptFields.map((field, index) => (
@@ -207,16 +222,28 @@ class ScriptEditor extends React.Component {
     const { name } = this.props;
     const text = this.getValue();
     const segmentInfo = getCharCount(text);
+    // const sampleContact = this.props.sampleContact;
+    // console.log("RENDER METHOD INSIDE SCRIPT EDITOR");
+    // console.log("PROPS");
+    // console.log(this.props);
+    // console.log("PROPS - script Text");
+    // console.log(text);
+    // console.log("PROPS - sampleContact");
+    // console.log(this.props.sampleContact);
+    // console.log("THIS.renderAdminTextPreview()");
+    // console.log(this.renderAdminTextPreview());
     return (
       <div>
         <div style={segmentInfo.charCount > 1600 ? { color: "red" } : {}}>
           Total characters: {segmentInfo.charCount}
+         
+         {/* {this.renderAdminTextPreview()} */}
+         
           {segmentInfo.charCount > 1600 ? (
             <span> Exceeded MMS maximum </span>
           ) : null}
         </div>
-          <div>
-          <AdminTextPreview text='SCRIPTEDITOR admin text preview test'/>
+          <div style={styles.editor}>
   
           </div>
         <div style={styles.editor} onClick={this.focus}>
