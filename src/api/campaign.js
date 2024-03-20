@@ -102,6 +102,7 @@ export const schema = gql`
     isArchivedPermanently: Boolean
     creator: User
     texters: [User]
+    sampleContact: CampaignContact
     assignments(assignmentsFilter: AssignmentsFilter): [Assignment]
     interactionSteps: [InteractionStep]
     contacts: [CampaignContact]
