@@ -65,13 +65,13 @@ const capitalize = str => {
 };
 
 const getScriptFieldValue = (contact, texter, fieldName) => {
-  console.log("getScriptFieldValue from SCRIPTS line 68")
-  console.log("CONTACT")
-  console.log(contact)
-  console.log("TEXTER")
-  console.log(texter)
-  console.log("fieldName")
-  console.log(fieldName)
+  // console.log("getScriptFieldValue from SCRIPTS line 68")
+  // console.log("CONTACT")
+  // console.log(contact)
+  // console.log("TEXTER")
+  // console.log(texter)
+  // console.log("fieldName")
+  // console.log(fieldName)
 
   let result;
   if (fieldName === "texterAliasOrFirstName") {
