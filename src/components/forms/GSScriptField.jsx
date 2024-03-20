@@ -86,11 +86,13 @@ export default class GSScriptField extends GSFormField {
         onClose={this.handleCloseDialog}
       >
         <DialogContent>
+
           <ScriptEditor
             expandable
             ref={this.dialogScriptInput}
             scriptText={this.state.script}
             sampleContact={sampleContact}
+            customFields={customFields}
             scriptFields={scriptFields}
             onChange={val => this.setState({ script: val })}
           />

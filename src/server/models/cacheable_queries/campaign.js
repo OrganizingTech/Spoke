@@ -33,6 +33,25 @@ const exportCampaignCacheKey = id =>
 const CONTACT_CACHE_ENABLED =
   process.env.REDIS_CONTACT_CACHE || global.REDIS_CONTACT_CACHE;
 
+const dbSampleContact = async id => {
+  // console.log("what is r? ---------------LOOK FOR R", r)
+  const firstContact = await r
+    .knex("campaign_contact")
+    .select("custom_fields")
+    .whereIn(
+      "campaign_contact.id",
+      r
+        .knex("campaign")
+        .join("campaign_contact", "campaign_contact.campaign_id", "campaign.id")
+        .select(r.knex.raw("campaign_contact"))
+        .where("campaign.id", id)
+    )
+    .first();
+  if (firstContact) {
+    return Object.keys(JSON.parse(firstContact.sampleContact));
+  }
+  return [];
+};
 const dbCustomFields = async id => {
   // This rather Byzantine query just to get the first record
   // is due to postgres query planner (for 11.8 anyway) being particularly aggregious
@@ -94,6 +113,7 @@ const loadDeep = async id => {
       // do not cache archived campaigns
       return campaign;
     }
+    campaign.sampleContact = await dbSampleContact(id);
     campaign.customFields = await dbCustomFields(id);
     campaign.interactionSteps = await dbInteractionSteps(id);
     campaign.usedFields = getUsedScriptFields(
@@ -195,6 +215,7 @@ const load = async (id, opts) => {
       campaignObj.feature = getFeatures(campaignObj);
       // console.log('campaign cache', cacheKey(id), campaignObj, campaignData)
       const campaign = modelWithExtraProps(campaignObj, Campaign, [
+        "sampleContact",
         "customFields",
         "feature",
         "interactionSteps",
@@ -238,6 +259,7 @@ const campaignCache = {
   },
   reload: loadDeep,
   currentEditors,
+  dbSampleContact,
   dbCustomFields,
   dbInteractionSteps,
   completionStats: async id => {

@@ -278,6 +278,8 @@ class ScriptEditor extends React.Component {
 
 ScriptEditor.propTypes = {
   scriptFields: PropTypes.array,
+  customFields: PropTypes.array,
+  sampleContact: PropTypes.array,
   scriptText: PropTypes.string,
   onChange: PropTypes.func,
   name: PropTypes.string

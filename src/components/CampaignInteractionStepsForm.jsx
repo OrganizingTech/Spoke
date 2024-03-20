@@ -395,6 +395,7 @@ export class CampaignInteractionStepsFormBase extends React.Component {
                 type="script"
                 fullWidth
                 customFields={this.props.customFields}
+                sampleContact={this.props.sampleContact}
                 label="Script"
                 multiline
                 hintText="This is what your texters will send to your contacts. E.g. Hi, {firstName}. It's {texterFirstName} here."
@@ -497,6 +498,7 @@ CampaignInteractionStepsFormBase.propTypes = {
   ensureComplete: type.bool,
   onSubmit: type.func,
   customFields: type.array,
+  sampleContact: type.object,
   saveLabel: type.string,
   errors: type.array,
   availableActions: type.array

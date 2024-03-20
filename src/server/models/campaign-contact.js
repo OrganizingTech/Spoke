@@ -15,6 +15,7 @@ const CampaignContact = thinky.createModel(
       last_name: optionalString(),
       cell: requiredString(),
       zip: optionalString(),
+      sampleContact: requiredString().default(""),
       custom_fields: requiredString().default("{}"),
       created_at: timestamp(),
       updated_at: timestamp(),

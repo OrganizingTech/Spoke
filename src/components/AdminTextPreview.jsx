@@ -3,26 +3,17 @@ import { applyScript } from '../lib/scripts'
 // I might have to add an ingestMethod just go get the first line of data.
 
 const AdminTextPreview = ({campaignData}) => {
-    console.log('LOOK HERE FIRST! ----------------------------- ADMINTEXTPREVIEW COMPONENT');
-    console.log("customFields", campaignData.customFields);
-    console.log("script", campaignData.formValues.interactionSteps.script);
-    // const value = campaignProps
-    // console.log('ALLFIELDS');
-    // console.log(allFields);
-    // console.log('TYPE');
-    // console.log(type);
-    // console.log('SCRIPT-TEXT');
-    // console.log(sampleScript);
-    // console.log('SAMPLE-TEXTER');
-    
-    // const sampleTexter = {contactId: "40", texterFirstName:'Happy'};
-    // console.log(sampleTexter);
-    
+    // console.log('LOOK HERE FIRST! ----------------------------- ADMINTEXTPREVIEW COMPONENT');
+    // console.log("customFields", campaignData.customFields);
+    const customFields = campaignData.customFields
+    const script = campaignData.formValues.interactionSteps.script
+    const texter = {contactId: "40", texterFirstName: "Happy"};
+    // console.log("Seeking texter", campaignData)    
     const value = applyScript({
         contact: "test contact", 
-        texter: "texter",
-        script: "test script", 
-        customFields: campaignData.customFields
+        texter: texter,
+        script: script, 
+        customFields: customFields
     })
 
     return (

@@ -441,6 +441,30 @@ export const resolvers = {
           stats.needsResponseCount > -1 ? stats.needsResponseCount : null
       };
     },
+    sampleContact: async (campaign, _, {user}) => {
+      // Establish secure access
+      
+      await accessRequired(user, campaign.organization_id, "SUPERVOLUNTEER", true);
+      const campaign_id = campaign.id
+      return (
+        console.log("I am the sampleContact"),
+        console.log("I am the campaign_id result", campaign_id),
+        // console.log("I am the cacheableData.campaignContact result:", cacheableData.campaignContact.load),
+        console.log("I am dbSampleContact", cacheableData.campaign.dbSampleContact(campaign.id))
+      
+        // campaign.sampleContact ||
+        // cacheableData.campaign.dbSampleContact(campaign.id)
+      );
+      // console.log("LOOK DOWN FIRST! -------------------------------");
+      // console.log("Campaign from src/server/api/campaign", campaign.campaignContact);
+      // console.log("User from src/server/api/campaign", user);
+      // console.log("LOOK UP FIRST! -------------------------------");
+      // // TODO: should we include a limit() since this is only for send-replies
+      // const contact = r.knex("campaign_contact").where({ campaign_id: campaign.id });
+      // console.log("Contact", contact)
+
+      //Test Connection
+    },
     texters: async (campaign, _, { user }) => {
       await accessRequired(
         user,

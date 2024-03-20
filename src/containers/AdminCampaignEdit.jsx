@@ -71,6 +71,12 @@ const campaignInfoFragment = `
     sideboxChoices
   }
   timezone
+  sampleContact {
+    id
+    firstName
+    lastName
+    customFields
+  }
   texters {
     id
     firstName
@@ -398,20 +404,18 @@ export class AdminCampaignEditBase extends React.Component {
       return section.checkCompleted();
     }
 
-    handleAdminTextPreview() {
-      const { customFields } = this.props;
-      console.log("LINE 403 OF ADMIN CAMPAIGN EDIT")
-      console.log("custom fields", customFields)
-        const allData = JSON.stringify(customFields)
-        const value = (<AdminTextPreview allData={allData} />)
-      return (
-        value
-      );
-    };
+    // handleAdminTextPreview() {
+    //   const { customFields } = this.props;
+    //   console.log("LINE 403 OF ADMIN CAMPAIGN EDIT")
+    //   console.log("custom fields", customFields)
+    //     const allData = JSON.stringify(customFields)
+    //     const value = (<AdminTextPreview allData={allData} />)
+    //   return (
+    //     value
+    //   );
+    // };
     
     sections() {
-      console.log("THIS.PROPS in SECTIONS METHOD in ADMINCAMPAIGNEDIT", this.props);
-      console.log("THIS.STATE in SECTIONS METHOD in ADMINCAMPAIGNEDIT", this.state);
 
       const pendingJobs = this.props.campaignData.campaign.pendingJobs;
       const finalSections = [
@@ -493,7 +497,6 @@ export class AdminCampaignEditBase extends React.Component {
           ? "Initial Outbound"
           : "Interactions",
         content: CampaignInteractionStepsForm,
-        content2: this.handleAdminTextPreview(this.props),
         keys: ["interactionSteps"],
         checkCompleted: () =>
           this.state.campaignFormValues.interactionSteps[0] &&
@@ -504,6 +507,7 @@ export class AdminCampaignEditBase extends React.Component {
         expandAfterCampaignStarts: true,
         expandableBySuperVolunteers: true,
         extraProps: {
+          sampleContact: this.props.campaignData.campaign.sampleContact,
           customFields: this.props.campaignData.campaign.customFields,
           availableActions: this.props.organizationData.organization
             .availableActions
